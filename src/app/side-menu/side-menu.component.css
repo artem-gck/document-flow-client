@@ -1,0 +1,60 @@
+.sidenav {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #146581;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-evenly;
+    width: 135px;
+}
+
+.menu {
+    z-index: 1;
+    height: 70%;
+    background-color: transparent;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-evenly;
+    width: 135px;
+}
+
+a {
+    text-decoration: none;
+    font-size: 25px;
+    color: #FAFAFA;
+}
+
+img {
+    height: 36px;
+}
+
+span {
+    display: block;
+    font-size: 14px;
+}
+
+.create-task {
+    padding-left: 7px;
+}
+
+.create-document {
+    padding-right: 5px;
+}
+
+.manage-accounts {
+    padding-left: 5px;
+}
+
+.title {
+    font-size: 28px;
+}
+/* a:hover {
+    color: black;
+} */
