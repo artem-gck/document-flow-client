@@ -28,7 +28,6 @@
 a {
     text-decoration: none;
     font-size: 25px;
-    color: #FAFAFA;
     cursor: pointer;
 }
 
@@ -38,6 +37,7 @@ img {
 
 span {
     display: block;
+    color: #FAFAFA;
     font-size: 14px;
 }
 
@@ -60,6 +60,3 @@ span {
 button {
     margin-right: 8px;
   }
-/* a:hover {
-    color: black;
-} */

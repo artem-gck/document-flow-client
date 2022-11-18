@@ -1,0 +1,31 @@
+button {
+    margin-right: 8px;
+}
+
+.dialog-panel {
+    width: 100%;
+    height: 300px;
+}
+
+.doc-insert {
+    padding-left: 0;
+}
+
+textarea {
+    border: 1px solid #146581;
+    border-radius: 4px;
+    resize: none;
+    padding: 5px;
+}
+
+textarea:focus {
+    outline: 0;
+}
+
+label {
+    color: #484644;
+}
+
+.tasks {
+    width: 288px;
+}

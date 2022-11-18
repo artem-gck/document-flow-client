@@ -5,3 +5,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-dialog-container {
+    border-radius: 20px !important;
+    padding: 50px !important;
+}
+
+.mat-dialog-title {
+  font-size: 32px !important;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: #146581 !important;
+}
+
+.mat-focused .mat-form-field-underline .mat-form-field-ripple {
+  background-color: #146581 !important;
+}

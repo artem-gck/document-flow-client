@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { DocumentsComponent } from '../documents/documents.component';
 
 @Component({
   selector: 'app-side-menu',
@@ -11,10 +12,9 @@ export class SideMenuComponent implements OnInit {
   constructor(public dialog: MatDialog) {}
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(DialogAnimationsExampleDialog, {
+    this.dialog.open(DocumentsComponent, {
       width: '713px',
-      height: '651px',
-      
+      height: '500px',
       enterAnimationDuration,
       exitAnimationDuration,
     });
@@ -22,12 +22,4 @@ export class SideMenuComponent implements OnInit {
 
   ngOnInit(): void {
   }
-}
-
-@Component({
-  selector: 'dialog-animations-example-dialog',
-  templateUrl: './document-dialog.html',
-})
-export class DialogAnimationsExampleDialog {
-  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) {}
 }

@@ -1,0 +1,22 @@
+.lent {
+    height: 150px;
+    border: 1px black solid;
+}
+
+.container {
+    max-width: 100%;
+}
+
+.row {
+    margin: 20px 0px;
+}
+
+.tasks {
+    height: 530px;
+    border: 1px black solid;
+}
+
+.comments {
+    height: 200px;
+    border: 1px black solid;
+}

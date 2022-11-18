@@ -1,0 +1,17 @@
+<form class="example-form">
+    <label>Task (optional)</label>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Task</mat-label>
+        <input type="text"
+             placeholder="Pick task"
+             aria-label="Number"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)='getSelection($event.option.value)'>
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.header">
+                {{option.header}}, {{option.position}}, {{option.department}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>

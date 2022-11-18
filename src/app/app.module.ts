@@ -2,21 +2,28 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DialogAnimationsExampleDialog, SideMenuComponent } from './side-menu/side-menu.component';
+import { SideMenuComponent } from './side-menu/side-menu.component';
 import { MaterialExampleModule } from '../material.module';
 import { AccountsComponent } from './accounts/accounts.component';
 import { MainComponent } from './main/main.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule}  from '@angular/material/core';
+import { DocumentsComponent } from './documents/documents.component';
+import { DocumentsInsertComponent } from './documents/documents-insert/documents-insert.component';
+import { InsertTasksComponent } from './documents/insert-tasks/insert-tasks.component';
+import { LentOfTasksComponent } from './main/lent-of-tasks/lent-of-tasks.component';
 
 @NgModule({
   declarations: [
-    DialogAnimationsExampleDialog,
     AppComponent,
     SideMenuComponent,
     AccountsComponent,
-    MainComponent
+    MainComponent,
+    DocumentsComponent,
+    DocumentsInsertComponent,
+    InsertTasksComponent,
+    LentOfTasksComponent
   ],
   imports: [
     BrowserModule,
