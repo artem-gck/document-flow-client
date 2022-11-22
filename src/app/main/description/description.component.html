@@ -1,0 +1,26 @@
+<div class="header-table">
+    <div class="header">
+        <span>Header: {{ task.header }}</span>
+    </div>
+    <div class="status">
+        <span>Status: {{ task.status }}</span>
+    </div>
+</div>
+<div>
+    <div class="table-row">
+        <div class="header">
+            <span>Owner: {{ task.creater.name }}</span>
+        </div>
+        <div class="status">
+            <span>{{ task.creater.task }}</span>
+        </div>
+    </div>
+    <div class="table-row" *ngFor="let memb of members">
+        <div class="header">
+            <span>Member: {{ memb.name }}</span>
+        </div>
+        <div class="status">
+            <span>{{ memb.task }}</span>
+        </div>
+    </div>
+</div>

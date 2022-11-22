@@ -1,0 +1,36 @@
+.header-table {
+    width: 100%;
+    height: 30px;
+    border: 2px solid #14658176;
+    border-radius: 5px;
+    padding: 3px 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.table-row {
+    width: 100%;
+    height: 50px;
+    border: 1px solid gray;
+    border-bottom: 0px;
+    padding: 1px 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.table-row:first-child {
+    margin-top: 10px;
+    border-top: 1px solid gray;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.table-row:last-child {
+    border-bottom: 1px solid gray;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.header {
+    width: 40%;
+}

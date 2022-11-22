@@ -12,7 +12,14 @@ import { MatNativeDateModule}  from '@angular/material/core';
 import { DocumentsComponent } from './documents/documents.component';
 import { DocumentsInsertComponent } from './documents/documents-insert/documents-insert.component';
 import { InsertTasksComponent } from './documents/insert-tasks/insert-tasks.component';
-import { LentOfTasksComponent } from './main/lent-of-tasks/lent-of-tasks.component';
+import { DocumentComponent } from './shared/document/document.component';
+import { HorizontalScrollDirective } from './shared/directives/horizontal-scroll.directive';
+import { TableOfTasksComponent } from './main/table-of-tasks/table-of-tasks.component';
+import { TableComponent } from './main/table-of-tasks/table/table.component';
+import { DescriptionComponent } from './main/description/description.component';
+import { DialogComponent } from './main/dialog/dialog.component';
+import { OrderComponent } from './tasks/order/order.component';
+import { TasksComponent } from './tasks/tasks.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +30,14 @@ import { LentOfTasksComponent } from './main/lent-of-tasks/lent-of-tasks.compone
     DocumentsComponent,
     DocumentsInsertComponent,
     InsertTasksComponent,
-    LentOfTasksComponent
+    DocumentComponent,
+    HorizontalScrollDirective,
+    TableOfTasksComponent,
+    TableComponent,
+    TasksComponent,
+    DescriptionComponent,
+    DialogComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +47,9 @@ import { LentOfTasksComponent } from './main/lent-of-tasks/lent-of-tasks.compone
     MatNativeDateModule,
     MaterialExampleModule,
     ReactiveFormsModule,
+  ],
+  exports: [
+    DocumentsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

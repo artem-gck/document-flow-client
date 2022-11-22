@@ -1,1 +1,22 @@
-<p>tasks works!</p>
+<div class="header-container">
+    <span class="header">Create task</span>
+</div>
+<div class="components">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 form">
+
+            </div>
+            <div class="col-lg-6 order">
+                <app-order></app-order>
+            </div>
+        </div>
+    </div>
+    <div class="documents">
+        <app-document *ngFor="let doc of documents" [document]="doc"></app-document>
+    </div>
+    <div appHorizontalScroll class="buttons">
+        <button mat-button cdkFocusInitial (click)="onClear()">Clear</button>
+        <button mat-button cdkFocusInitial (click)="onCreate()">Create</button>
+    </div>
+</div>

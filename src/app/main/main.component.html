@@ -1,17 +1,24 @@
 <div class="container">
     <div class="row">
-        <div class="col-lg-12 lent">
-            <app-lent-of-tasks></app-lent-of-tasks>
+        <div appHorizontalScroll class="col-lg-12 lent">
+            <app-document *ngFor="let doc of documents" [document]="doc"></app-document>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12 tasks">
-            Table of tasks
+            <app-table-of-tasks></app-table-of-tasks>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-12 comments">
-            Comments & short view
+        <div class="col-2">
+            <div class="select">
+                <button class="edit" (click)="onEditClick()"><img src="/assets\images\edit-task.png"> Edit</button>
+                <mat-divider></mat-divider>
+                <button class="edit" (click)="onDeleteClick('100ms', '100ms')"><img src="/assets\images\remove-task.png"> Delete</button>
+            </div>
+        </div>
+        <div class="col-lg-10 comments">
+            <app-description></app-description>
         </div>
     </div>
 </div>

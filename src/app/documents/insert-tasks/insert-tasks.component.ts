@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { Task } from '../task.model';
+import { Task } from '../../shared/task.model';
 
 @Component({
   selector: 'app-insert-tasks',
