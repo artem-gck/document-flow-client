@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { DocumentsComponent } from '../documents/documents.component';
 
 @Component({
@@ -9,7 +10,7 @@ import { DocumentsComponent } from '../documents/documents.component';
 })
 export class SideMenuComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private oidcSecurityService: OidcSecurityService) {}
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(DocumentsComponent, {
@@ -21,5 +22,9 @@ export class SideMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  onLogout() {
+    this.oidcSecurityService.logoff().subscribe((result) => console.log(result));
   }
 }

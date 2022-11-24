@@ -1,0 +1,39 @@
+.head {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.header {
+    font-size: 20px;
+    margin: 30px ;
+}
+
+.row {
+    height: 100%;
+}
+
+.bod {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    height: 100px;
+    margin-bottom: 0px;
+}
+
+textarea {
+    border: 1px solid #146581;
+    border-radius: 4px;
+    resize: none;
+    padding: 5px;
+}
+
+.cross {
+    border: 0px;
+    background-color: transparent;
+}

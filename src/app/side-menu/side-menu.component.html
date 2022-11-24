@@ -1,7 +1,9 @@
 <div class="sidenav">
     <div>
         <a routerLink="/">
-            <span class="title">Docs&Go</span>
+            <span class="title">Docs</span>
+            <span class="title">&</span>
+            <span class="title">Go</span>
         </a>
     </div>
     <div class="menu">
@@ -15,10 +17,15 @@
             <span>Create</span>
             <span>document</span>
         </a>
-        <a routerLink="/accounts">
+        <a href="https://localhost:44310/">
             <img class="manage-accounts" src="/assets\images\manage-accounts.png" alt="">
             <span>Manage</span>
             <span>accountes</span>
         </a>
+    </div>
+    <div class="button">
+        <button class="logout-button" (click)="onLogout()">
+            Log out
+        </button>
     </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskFull } from 'src/app/shared/task-full.model';
-import { User } from 'src/app/shared/user.model';
+import { TaskFull } from 'src/app/shared/models/task-full.model';
+import { User } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-description',

@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div appHorizontalScroll class="col-lg-12 lent">
-            <app-document *ngFor="let doc of documents" [document]="doc"></app-document>
+            <app-document *ngFor="let doc of documents" [document]="doc" (delete)="onDeleteDoc($event)"></app-document>
         </div>
     </div>
     <div class="row">

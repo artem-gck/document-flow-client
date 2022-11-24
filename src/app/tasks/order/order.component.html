@@ -1,1 +1,19 @@
-<p>order works!</p>
+<div class="container" *ngFor="let task of tasks">
+    <div class="row">
+        <div class="col-4 head">
+            <div class="person">
+                <button class="cross" (click)="onCross(task)">
+                    <img src="/assets\images\cross.png">
+                </button>
+            </div>
+            <div class="label">
+                <span>{{ task.name }}</span>
+                <br>
+                <span>{{ task.position}}, {{ task.department }}</span>
+            </div>
+        </div>
+        <div class="col-8 bod">
+            <textarea name="" id="" cols="70" rows="4" placeholder="Input task..." [(ngModel)]="task.header"></textarea>
+        </div>
+    </div>
+</div>

@@ -5,17 +5,25 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 form">
-
+                <app-form></app-form>
             </div>
             <div class="col-lg-6 order">
-                <app-order></app-order>
+                <div class="header-container">
+                    <span class="header-order">Execution order</span>
+                </div>
+                <div class="order-comp">
+                    <app-order></app-order>
+                </div>
             </div>
         </div>
     </div>
-    <div class="documents">
-        <app-document *ngFor="let doc of documents" [document]="doc"></app-document>
+    <div class="documents-container">
+        <span class="attached-documents">Attached documents</span>
+        <div appHorizontalScroll class="documents">
+            <app-document *ngFor="let doc of documents" [document]="doc" (delete)="onDeleteDoc($event)"></app-document>
+        </div>
     </div>
-    <div appHorizontalScroll class="buttons">
+    <div class="buttons">
         <button mat-button cdkFocusInitial (click)="onClear()">Clear</button>
         <button mat-button cdkFocusInitial (click)="onCreate()">Create</button>
     </div>

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Doc } from '../doc.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Doc } from '../models/doc.model';
 
 @Component({
   selector: 'app-document',
@@ -8,10 +8,14 @@ import { Doc } from '../doc.model';
 })
 export class DocumentComponent implements OnInit {
   @Input() document: Doc;
+  @Output() delete = new EventEmitter<Doc>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onDelete() {
+    this.delete.emit(this.document);
+  }
 }

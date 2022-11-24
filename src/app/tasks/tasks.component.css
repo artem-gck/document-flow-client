@@ -1,7 +1,11 @@
 .container {
     width: 100%;
     max-width: 100%;
-    height: 630px;
+    height: 600px;
+}
+
+.documents-container {
+    padding-top: 10px;
 }
 
 .components {
@@ -9,6 +13,7 @@
 }
 
 .header-container {
+    margin-top: 10px;
     height: 60px;
     display: flex;
     align-items: center;
@@ -16,7 +21,7 @@
 
 .header {
     font-size: 32px;
-    margin: 40px 40px;
+    margin: 40px;
     max-width: 100%;
 }
 
@@ -24,14 +29,31 @@
     height: 100%;
 }
 
+.attached-documents {
+    margin-top: 10px;
+}
+
 .form {
-    border: 1px solid black;
-    height: 100%;
+    height: 80%;
+    padding: 0;
+    margin-left: -10px;
+    margin-top: 70px;
+}
+
+.header-order {
+    margin: 0px 0px 40px 40px;
+    font-size: 20px;
 }
 
 .order {
-    border: 1px solid black;
     height: 100%;
+}
+
+.order-comp {
+    height: 80%;
+    
+    overflow-x: none;
+    overflow-y: auto;
 }
 
 .buttons {

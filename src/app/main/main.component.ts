@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
-import { Doc } from '../shared/doc.model';
+import { Doc } from '../shared/models/doc.model';
+import { OidcSecurityService, UserDataResult } from 'angular-auth-oidc-client';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -9,7 +11,10 @@ import { Doc } from '../shared/doc.model';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  documents: Doc[] = [new Doc('Artem Hatsko', 1, 'It is my first document. It is document for credit of our bank account'), new Doc('Artem Hatsko', 1, 'It is my second document')];
+  documents: Doc[] = [
+    new Doc('1', 'Artem Hatsko', 1, 'It is my first document. It is document for credit of our bank account'), 
+    new Doc('2', 'Artem Hatsko', 1, 'It is my second document')
+  ];
 
   constructor(public dialog: MatDialog) {}
 
@@ -26,5 +31,12 @@ export class MainComponent implements OnInit {
       enterAnimationDuration,
       exitAnimationDuration,
     });
+  }
+
+  onDeleteDoc(document: Doc) {
+    let index = this.documents.indexOf(document);
+    
+    if (index > -1)
+    this.documents.splice(index, 1);
   }
 }

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatRow, MatTableDataSource} from '@angular/material/table';
-import { UserData } from 'src/app/shared/user-data.model';
+import { UserData } from 'src/app/shared/models/user-data.model';
 
 const FRUITS: string[] = [
   'blueberry',

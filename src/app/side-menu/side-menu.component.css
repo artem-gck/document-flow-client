@@ -10,7 +10,7 @@
     flex-direction: column;
     text-align: center;
     justify-content: space-evenly;
-    width: 135px;
+    width: 100px;
 }
 
 .menu {
@@ -22,7 +22,7 @@
     flex-direction: column;
     text-align: center;
     justify-content: space-evenly;
-    width: 135px;
+    width: 100%;
 }
 
 a {
@@ -55,8 +55,23 @@ span {
 
 .title {
     font-size: 28px;
+    margin-bottom: 5px;
 }
 
 button {
     margin-right: 8px;
-  }
+}
+
+.logout-button {
+    border: 0px;
+    background-color: transparent;
+    font-size: 16px;
+    color: white;
+    margin-left: 8px;
+}
+
+.button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

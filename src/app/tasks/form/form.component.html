@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput [(ngModel)]="name" placeholder="Input your name...">
+            </mat-form-field>
+        </div>
+        <div class="col-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Deadline</mat-label>
+                <input matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="type-of-execution-header">
+                <span>Type of execution</span>
+            </div>
+            <div class="type-of-execution">
+                <mat-radio-group aria-label="Select an option" [(ngModel)]="typeOfExecution" [value]=0>
+                    <mat-radio-button class="type" [value]="option.value" *ngFor="let option of selectionOfTypes">{{ option.label }}</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+    </div>
+    <div class="row fields">
+        <div class="col-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Documents</mat-label>
+                <input matInput
+                       aria-label="State"
+                       [matAutocomplete]="auto1"
+                       [formControl]="stateCtrl">
+                <mat-autocomplete #auto1="matAutocomplete">
+                  <mat-option *ngFor="let state of filteredStates | async" [value]="state.description">
+                    <!-- <img alt="" class="example-option-img" [src]="state.flag" height="25"> -->
+                    <span>{{state.description}}</span> |
+                    <small>Population: {{state.creator}}</small>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+        </div>
+        <div class="col-6">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>User</mat-label>
+                <input type="text" matInput 
+                       [formControl]="myControl" 
+                       [matAutocomplete]="auto2">
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option.name}}
+                  </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+    </div>
+</div>

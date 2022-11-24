@@ -20,6 +20,8 @@ import { DescriptionComponent } from './main/description/description.component';
 import { DialogComponent } from './main/dialog/dialog.component';
 import { OrderComponent } from './tasks/order/order.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { FormComponent } from './tasks/form/form.component';
+import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { TasksComponent } from './tasks/tasks.component';
     TasksComponent,
     DescriptionComponent,
     DialogComponent,
-    OrderComponent
+    OrderComponent,
+    FormComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,19 @@ import { TasksComponent } from './tasks/tasks.component';
     MatNativeDateModule,
     MaterialExampleModule,
     ReactiveFormsModule,
+    AuthModule.forRoot({
+      config: {
+        authority: "https://localhost:44310",
+        redirectUrl: window.location.origin,
+        postLogoutRedirectUri: window.location.origin,
+        clientId: "angular",
+        scope: 'openid profile angular',
+        responseType: 'code',
+        silentRenew: true,
+        useRefreshToken: true,
+        logLevel: LogLevel.Debug,
+      },
+    }),
   ],
   exports: [
     DocumentsComponent
