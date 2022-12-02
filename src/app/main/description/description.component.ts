@@ -1,34 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { TaskFull } from 'src/app/shared/models/task-full.model';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Performer } from 'src/app/shared/models/performer.model';
+import { TaskModel } from 'src/app/shared/models/task.model';
 import { User } from 'src/app/shared/models/user.model';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-description',
   templateUrl: './description.component.html',
   styleUrls: ['./description.component.css']
 })
-export class DescriptionComponent implements OnInit {
-  task: TaskFull = { header: 'header', 
-                 status: 'status', 
-                 creater: {
-                   name: 'Artem Hatsko', 
-                   position: 'position', 
-                   department: 'department',
-                   task: 'Add new field'
-                 }, 
-                 members: [{ 
-                   name: 'Artem Hatsko', 
-                   position: 'position', 
-                   department: 'department',
-                   task: 'Add new field'}
-                 ]
-               };
+export class DescriptionComponent implements OnInit, OnChanges {
+  @Input() task: TaskModel = new TaskModel();
 
-  members: User[] = this.task.members;
+  members: Performer[] = [];
 
-  constructor() { }
+  constructor(private userService: UserService) { }
+  
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    let owner = await this.userService.getUser(this.task.ownerUserId).toPromise();
+    this.task.ownerName = owner!.surname + ' ' + owner!.name;
+    this.members = [];
+    let membersArray = this.task.performers;
 
-  ngOnInit(): void {
+    membersArray.forEach(async memb => {
+      let user = await this.userService.getUser(memb.userId).toPromise();
+      memb.userName = user?.surname + " " + user?.name;
+      
+      this.members.push(memb!);
+    });
+
+    console.log(this.members);
+  }
+
+  async ngOnInit(): Promise<void> {
+
   }
 
 }

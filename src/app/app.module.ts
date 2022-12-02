@@ -21,7 +21,19 @@ import { DialogComponent } from './main/dialog/dialog.component';
 import { OrderComponent } from './tasks/order/order.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { FormComponent } from './tasks/form/form.component';
-import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenService } from './shared/interceptors/token.service';
+import { AuthenticationModule } from './authentication.module';
+import { ErrorComponent } from './error/error.component';
+import { ApiGatewayService } from './shared/interceptors/api-gateway.service';
+import { RegistrationComponent } from './registration/registration.component';
+import { TasksEditComponent } from './tasks-edit/tasks-edit.component';
+
+export const interceptorProviders = 
+   [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiGatewayService, multi: true }
+];
 
 @NgModule({
   declarations: [
@@ -41,8 +53,12 @@ import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
     DialogComponent,
     OrderComponent,
     FormComponent,
+    ErrorComponent,
+    RegistrationComponent,
+    TasksEditComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -50,24 +66,14 @@ import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
     MatNativeDateModule,
     MaterialExampleModule,
     ReactiveFormsModule,
-    AuthModule.forRoot({
-      config: {
-        authority: "https://localhost:44310",
-        redirectUrl: window.location.origin,
-        postLogoutRedirectUri: window.location.origin,
-        clientId: "angular",
-        scope: 'openid profile angular',
-        responseType: 'code',
-        silentRenew: true,
-        useRefreshToken: true,
-        logLevel: LogLevel.Debug,
-      },
-    }),
+    AuthenticationModule
   ],
   exports: [
     DocumentsComponent
   ],
-  providers: [],
+  providers: [
+    interceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-documents-insert',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DocumentsInsertComponent implements OnInit {
   nameOfFile: string = 'Drag and drop file here';
+  @Output() fileAdded = new EventEmitter<File>();
 
   constructor() { }
 
@@ -19,6 +20,9 @@ export class DocumentsInsertComponent implements OnInit {
 
     if (fileList != null && fileList.length != 0) {
       let file = fileList.item(0) as File;
+
+      this.fileAdded.emit(file);
+
       this.nameOfFile = file.name;
     }
   }

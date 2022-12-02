@@ -1,67 +1,79 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatRow, MatTableDataSource} from '@angular/material/table';
-import { UserData } from 'src/app/shared/models/user-data.model';
-
-const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
-];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatRow, MatTableDataSource } from '@angular/material/table';
+import { TaskModel } from 'src/app/shared/models/task.model';
+import { TaskService } from 'src/app/shared/services/task.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements AfterViewInit  {
+export class TableComponent implements OnInit, OnChanges  {
   @Input() selectedTab: number = 0;
   @Input() selectedTypeOfTasks: number = 0;
 
-  displayedColumns: string[] = ['header', 'deadline', 'creator', 'id', 'createdAt'];
-  dataSource: MatTableDataSource<UserData>;
+  displayedColumns: string[] = ['header', 'deadLine', 'ownerUserId', 'id', 'createdAt'];
+  dataSource: MatTableDataSource<TaskModel>;
+  tasks: TaskModel[] | undefined;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
-    // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
+  @Output() selectedTask = new EventEmitter<TaskModel>();
 
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
-  }
+  constructor(private taskService: TaskService, private userService: UserService) { }
+  
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    if (this.selectedTypeOfTasks == 1)
+      switch(this.selectedTab) {
+        case 0:
+          this.tasks = await this.taskService.getTasksByOwner("For work").toPromise();
+          break;
+        case 1:
+          this.tasks = await this.taskService.getTasksByOwner("In work").toPromise();
+          break;
+        case 2:
+          this.tasks = await this.taskService.getTasksByOwner("Completed").toPromise();
+          break; 
+      }  
+    else
+      switch(this.selectedTab) {
+        case 0:
+          this.tasks = await this.taskService.getTasksByPerformer("For work").toPromise();
+          break;
+        case 1:
+          this.tasks = await this.taskService.getTasksByPerformer("In work").toPromise();
+          break;
+        case 2:
+          this.tasks = await this.taskService.getTasksByPerformer("Completed").toPromise();
+          break; 
+      }  
 
-  ngAfterViewInit() {
+    if (this.tasks == undefined)
+    {
+      this.dataSource = new MatTableDataSource();
+      return;
+    }
+
+    for (let i = 0; i < this.tasks.length; i++)
+    {
+      this.tasks.at(i)!.createdAtString = new Date(this.tasks.at(i)?.createdAt!).toLocaleDateString() as string;
+      this.tasks.at(i)!.deadLineString = new Date(this.tasks.at(i)?.deadLine!).toLocaleDateString() as string;
+
+      let user = await this.userService.getUser(this.tasks.at(i)!.ownerUserId).toPromise();
+      this.tasks.at(i)!.ownerName = user!.surname + " " + user!.name;
+    }
+
+    this.dataSource = new MatTableDataSource(this.tasks);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  async ngOnInit() {
+    
   }
 
   applyFilter(event: Event) {
@@ -74,22 +86,6 @@ export class TableComponent implements AfterViewInit  {
   }
 
   selectRow(row: MatRow) {
-    console.log(row);
+    this.selectedTask.emit(row as TaskModel);
   }
-}
-
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
-
-  return {
-    id: id.toString(),
-    header: name,
-    deadline: new Date().toLocaleDateString('en-US'),
-    creator: name,
-    createdAt: new Date().toLocaleDateString('en-US'),
-  };
 }

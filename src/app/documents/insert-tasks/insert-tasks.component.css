@@ -13,3 +13,10 @@
 span {
     font-size: 12px;
 }
+
+.option {
+    font-size: 10px;
+    margin: 0px;
+    padding: 0px;
+    height: 10px;
+}

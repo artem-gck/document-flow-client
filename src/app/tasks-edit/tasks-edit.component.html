@@ -1,5 +1,5 @@
 <div class="header-container">
-    <span class="header">Create task</span>
+    <span class="header">Edit task</span>
 </div>
 <div class="components">
     <div class="container">
@@ -24,7 +24,8 @@
         </div>
     </div>
     <div class="buttons">
+        <button mat-button cdkFocusInitial (click)="onDeleteTask()">Delete</button>
         <button mat-button cdkFocusInitial (click)="onClear()">Clear</button>
-        <button mat-button cdkFocusInitial (click)="onCreate()">Create</button>
+        <button mat-button cdkFocusInitial (click)="onCreate()">Edit</button>
     </div>
 </div>

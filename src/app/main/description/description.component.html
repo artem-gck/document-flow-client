@@ -1,26 +1,29 @@
-<div class="header-table">
+<div *ngIf="task" class="header-table">
     <div class="header">
         <span>Header: {{ task.header }}</span>
     </div>
-    <div class="status">
+    <div class="status-head">
         <span>Status: {{ task.status }}</span>
     </div>
+    <div class="type">
+        <span>Status: {{ task.type }}</span>
+    </div>
 </div>
-<div>
+<div *ngIf="task">
     <div class="table-row">
         <div class="header">
-            <span>Owner: {{ task.creater.name }}</span>
+            <span>Owner: {{ task.ownerName }}</span>
         </div>
         <div class="status">
-            <span>{{ task.creater.task }}</span>
+            <span>{{ task.header }}</span>
         </div>
     </div>
     <div class="table-row" *ngFor="let memb of members">
         <div class="header">
-            <span>Member: {{ memb.name }}</span>
+            <span>Member: {{ memb.userName }}</span>
         </div>
         <div class="status">
-            <span>{{ memb.task }}</span>
+            <span>{{ memb.description }}</span>
         </div>
     </div>
 </div>

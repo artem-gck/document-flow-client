@@ -6,19 +6,21 @@
     </div>
     <div class="row">
         <div class="col-lg-12 tasks">
-            <app-table-of-tasks></app-table-of-tasks>
+            <app-table-of-tasks (selectedTask)="onSelectTask($event)" (selectedType)="onSelectChange($event)"></app-table-of-tasks>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="selectedTask">
         <div class="col-2">
             <div class="select">
-                <button class="edit" (click)="onEditClick()"><img src="/assets\images\edit-task.png"> Edit</button>
-                <mat-divider></mat-divider>
-                <button class="edit" (click)="onDeleteClick('100ms', '100ms')"><img src="/assets\images\remove-task.png"> Delete</button>
+                <button class="edit" *ngIf="isExecute" (click)="onExecClick()"><img src="/assets\images\process-task.png"> Execute</button>
+                <mat-divider *ngIf="isExecute && isEdit"></mat-divider>
+                <button class="edit" *ngIf="isEdit" (click)="onEditClick()"><img src="/assets\images\edit-task.png"> Edit</button>
+                <mat-divider *ngIf="isDelete && isEdit"></mat-divider>
+                <button class="edit" *ngIf="isDelete" (click)="onDeleteClick('100ms', '100ms')"><img src="/assets\images\remove-task.png"> Delete</button>
             </div>
         </div>
         <div class="col-lg-10 comments">
-            <app-description></app-description>
+            <app-description [task]="selectedTask"></app-description>
         </div>
     </div>
 </div>

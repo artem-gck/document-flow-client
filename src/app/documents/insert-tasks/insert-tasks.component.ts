@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { Task } from '../../shared/models/task.model';
+import { TaskService } from 'src/app/shared/services/task.service';
+import { UserService } from 'src/app/shared/services/user.service';
+import { TaskModel } from '../../shared/models/task.model';
 
 @Component({
   selector: 'app-insert-tasks',
@@ -10,27 +12,33 @@ import { Task } from '../../shared/models/task.model';
   styleUrls: ['./insert-tasks.component.css']
 })
 export class InsertTasksComponent implements OnInit {
+  @Output() selectionValue = new EventEmitter<TaskModel>() //: TaskModel | undefined;
+  
   myControl = new FormControl('');
-  options: Task[] = [new Task('1', 'name 1', 'header 1', 'position 1', 'department 1'), new Task('2', 'name 1', 'header 2', 'position 2', 'department 2')];
-  filteredOptions: Observable<Task[]>;
-  selectionValue: Task | undefined;
+  filteredOptions: Observable<TaskModel[]>;
+  tasks: TaskModel[] | undefined;
 
-  ngOnInit() {
+  constructor (private taskService: TaskService, private userService: UserService) { }
+
+  async ngOnInit() {
+    this.tasks = await this.taskService.getAllTasksByOwner().toPromise();
+
+    if (this.tasks == undefined)
+      this.tasks = [];
+
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
     );
   }
 
-  private _filter(value: string): Task[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(option => option.header.toLowerCase().includes(filterValue));
+  getSelection(task: TaskModel, event: any) {
+    this.selectionValue.emit(task);// = task;
   }
 
-  getSelection(event: string) {
-    console.log(event);
+  private _filter(value: string): TaskModel[] {
+    const filterValue = value.toLowerCase();
 
-    this.selectionValue = this.options.find(task => task.header === event);
+    return this.tasks!.filter(option => option.header.toLowerCase().includes(filterValue));
   }
 }

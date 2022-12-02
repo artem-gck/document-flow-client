@@ -7,12 +7,12 @@
         <span class="col-8">{{ document.creator }}</span>
         <span class="col-3">Version {{ document.version }}</span>
     </div>
-    <a href="">
+    <button (click)="onFileDownload()">
         <div class="row body">
             <span class="col-12">
-                {{ document.description }}
+                {{ document.name }}
             </span>
         </div>
-    </a>
+    </button>
 </div>
 

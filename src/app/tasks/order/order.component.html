@@ -1,19 +1,27 @@
-<div class="container" *ngFor="let task of tasks">
+<div class="container">
     <div class="row">
-        <div class="col-4 head">
+        <div class="col-3 head">
             <div class="person">
-                <button class="cross" (click)="onCross(task)">
+                <button class="cross" (click)="onCross(user)">
                     <img src="/assets\images\cross.png">
                 </button>
             </div>
             <div class="label">
-                <span>{{ task.name }}</span>
-                <br>
-                <span>{{ task.position}}, {{ task.department }}</span>
+                <span>{{ user.userName }}</span>
             </div>
         </div>
-        <div class="col-8 bod">
-            <textarea name="" id="" cols="70" rows="4" placeholder="Input task..." [(ngModel)]="task.header"></textarea>
+        <div class="col-3 center">
+            <mat-radio-group
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group"
+                [(ngModel)]="user.typeOfTask">
+                <mat-radio-button class="example-radio-button" *ngFor="let select of typesOfExecuting" [value]="select">
+                    {{select}}
+                </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="col-6 bod">
+            <textarea name="" id="" cols="70" rows="4" placeholder="Description..." [(ngModel)]="user.description"></textarea>
         </div>
     </div>
 </div>

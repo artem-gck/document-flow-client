@@ -1,14 +1,14 @@
 <h1 mat-dialog-title>Add document</h1>
 <div mat-dialog-content class="dialog-panel container">
   <div class="row">
-    <app-documents-insert class="doc-insert col-6"></app-documents-insert>
+    <app-documents-insert class="doc-insert col-6" (fileAdded)="onFileAdded($event)"></app-documents-insert>
     <div class="col-6">
       <div class="area">
         <label for="theam">Theam</label>
         <textarea name="theam" id="theam" cols="37" rows="4" [(ngModel)]="theam" placeholder="Input theam..."></textarea>
       </div>
       <div class="tasks">
-        <app-insert-tasks></app-insert-tasks>
+        <app-insert-tasks (selectionValue)="onSelectTask($event)"></app-insert-tasks>
       </div>
     </div>
   </div>

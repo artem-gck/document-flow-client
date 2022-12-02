@@ -6,7 +6,7 @@
                     aria-labelledby="example-radio-group-label"
                     class="example-radio-group"
                     [(ngModel)]="selectedTypeOfTasks">
-                    <mat-radio-button class="example-radio-button" *ngFor="let select of selectableOptions" [value]="select.selector">
+                    <mat-radio-button class="example-radio-button" *ngFor="let select of selectableOptions" [value]="select.selector" (change)="onChangeSelect(select, $event)">
                         {{ select.type }}
                     </mat-radio-button>
                 </mat-radio-group>
@@ -14,8 +14,14 @@
         </div>
         <div class="col-10">
             <mat-tab-group [(selectedIndex)]="selectedTab">
-                <mat-tab [label]="tab" *ngFor="let tab of tabs"> 
-                    <app-table [selectedTab]="selectedTab" [selectedTypeOfTasks]="selectedTypeOfTasks"></app-table> 
+                <mat-tab label="For work"> 
+                    <app-table (selectedTask)="onSelectTask($event)" [selectedTab]=0 [selectedTypeOfTasks]="selectedTypeOfTasks"></app-table> 
+                </mat-tab>
+                <mat-tab label="In work"> 
+                    <app-table (selectedTask)="onSelectTask($event)" [selectedTab]=1 [selectedTypeOfTasks]="selectedTypeOfTasks"></app-table> 
+                </mat-tab>
+                <mat-tab label="Completed"> 
+                    <app-table (selectedTask)="onSelectTask($event)" [selectedTab]=2 [selectedTypeOfTasks]="selectedTypeOfTasks"></app-table> 
                 </mat-tab>
             </mat-tab-group>
         </div>

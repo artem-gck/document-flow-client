@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { Doc } from '../shared/models/doc.model';
-import { OidcSecurityService, UserDataResult } from 'angular-auth-oidc-client';
-import { Observable } from 'rxjs';
+import { DocumentService } from '../shared/services/document.service';
+import { UserService } from '../shared/services/user.service';
+import { TaskModel } from '../shared/models/task.model';
+import { TaskService } from '../shared/services/task.service';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -11,25 +15,44 @@ import { Observable } from 'rxjs';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  documents: Doc[] = [
-    new Doc('1', 'Artem Hatsko', 1, 'It is my first document. It is document for credit of our bank account'), 
-    new Doc('2', 'Artem Hatsko', 1, 'It is my second document')
-  ];
+  documents: Doc[] = [];
+  selectedTask: TaskModel | undefined;
+  selectedTypeOfTasks: number = 0;
 
-  constructor(public dialog: MatDialog) {}
+  isExecute: boolean = false;
+  isEdit: boolean = false;
+  isDelete: boolean = false;
 
-  ngOnInit(): void {
+  constructor(
+    private route: Router,
+    private dialog: MatDialog, 
+    private documentsService: DocumentService, 
+    private userService: UserService,
+    private oidcSecurityService: OidcSecurityService
+    ) { }
+
+  async ngOnInit(): Promise<void> {
+    this.documents = (await this.documentsService.getLastDocsNames(4).toPromise())!;
+
+    for (let i = 0; i < this.documents!.length; i++) {
+      this.userService.getUser(this.documents!.at(i)!.creatorId as string).subscribe(user => {
+          this.documents!.at(i)!.creator = user.surname + " " + user.name;
+      })
+    }
   }
 
   onEditClick() {
-    console.log("Edit task");
+    this.route.navigate([`/tasks/${this.selectedTask!.id}`]);
   }
 
   onDeleteClick(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(DialogComponent, {
-      width: '300px',
+      width: '600px',
       enterAnimationDuration,
       exitAnimationDuration,
+      data: {
+        taskId: this.selectedTask!.id
+      }
     });
   }
 
@@ -38,5 +61,46 @@ export class MainComponent implements OnInit {
     
     if (index > -1)
     this.documents.splice(index, 1);
+  }
+
+  onSelectTask(task: TaskModel) {
+    this.selectedTask = task;
+
+    let userId: string;
+
+    this.oidcSecurityService.checkAuth().subscribe(({ userData: userData }) => {
+      userId = userData.sub;   
+    });
+
+    if (this.selectedTask.ownerUserId == userId!) {
+      this.isDelete = true;
+      this.isEdit = true; 
+    }
+    else {
+      this.isDelete = false;
+      this.isEdit = false; 
+    }
+
+    this.isExecute = false;
+
+    if (this.selectedTask.status !== "Completed")
+      this.selectedTask.performers.every(arg => {
+        if (arg.userId == userId!)
+        {
+          this.isExecute = true;
+          return false;
+        }
+
+        return true;
+      })
+  }
+
+  onExecClick() { }
+
+  onSelectChange(select: number) {
+    this.selectedTask = undefined;
+    this.isDelete = false;
+    this.isEdit = false;
+    this.isExecute = false;
   }
 }
