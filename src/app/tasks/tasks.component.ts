@@ -7,6 +7,8 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { TaskService } from '../shared/services/task.service';
 import { Performer } from '../shared/models/performer.model';
 import { Validation } from '../shared/models/validation.model';
+import { ValidateDialogComponent } from '../validate-dialog/validate-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-tasks',
@@ -22,7 +24,8 @@ export class TasksComponent implements OnInit {
   constructor(
     private route: Router, 
     private oidcSecurityService: OidcSecurityService, 
-    private taskService: TaskService) { }
+    private taskService: TaskService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.task.performers = [];
@@ -44,6 +47,12 @@ export class TasksComponent implements OnInit {
 
     if (!this.validation.isValid) {
       console.log(this.validation);
+
+      this.dialog.open(ValidateDialogComponent, {
+        width: '400px',
+        data: this.validation,
+      });
+
       return;
     }
 
@@ -110,7 +119,7 @@ export class TasksComponent implements OnInit {
 
     if (this.task.deadLine == undefined) {
       this.validation.isValid = false;
-      this.validation.text += "Header can't be empty\n";
+      this.validation.text += "Deadline can't be empty\n";
     }
   }
 }

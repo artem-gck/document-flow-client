@@ -15,6 +15,7 @@
 </div>
 
 <div mat-dialog-actions align="end">
+  <span class="validation" *ngIf="!validation.isValid">Insert document</span>
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button mat-dialog-close (click)="onAddClick()">Add</button>
+  <button mat-button (click)="onAddClick()">Add</button>
 </div>

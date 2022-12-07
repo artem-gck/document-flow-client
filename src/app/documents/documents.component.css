@@ -29,3 +29,7 @@ label {
 .tasks {
     width: 288px;
 }
+
+.validation {
+    color: red;
+}

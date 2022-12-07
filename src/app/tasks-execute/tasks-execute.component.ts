@@ -28,7 +28,7 @@ export class TasksExecuteComponent implements OnInit, AfterViewInit {
     private taskService: TaskService,
     private documentsService: DocumentService,
     private oidcSecurityService: OidcSecurityService,
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private splashOnOffService: SplashOnOffService ) { }
 
   async ngOnInit(): Promise<void> {
