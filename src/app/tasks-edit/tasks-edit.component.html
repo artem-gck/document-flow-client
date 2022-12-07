@@ -5,14 +5,14 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 form">
-                <app-form [task]="task" [docsInput]="documents" [usersInput]="users"></app-form>
+                <app-form [task]="task!" [docsInput]="documents" [usersInput]="users"></app-form>
             </div>
             <div class="col-lg-6 order">
                 <div class="header-container">
                     <span class="header-order">Execution order</span>
                 </div>
                 <div class="order-comp">
-                    <app-order [task]="task" *ngFor="let user of users" [user]="user" (crossUser)="onCross($event)"></app-order>
+                    <app-order [task]="task!" *ngFor="let user of users" [user]="user" (crossUser)="onCross($event)"></app-order>
                 </div>
             </div>
         </div>

@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Update {{ data.name }}</h1>
+<div mat-dialog-content class="dialog-panel container">
+  <div class="row">
+    <div class="dropzone">
+        <div>
+            <input type="file" #fileDropRef class="fileDrop" single (change)="fileBrowseHandler($event)">
+            <img src="/assets\images\create-document-dark.png" alt="">
+            <span>{{ nameOfFile }}</span>
+        </div>
+    </div>
+    <input type="file" class="file-input" #fileInput single (change)="fileBrowseHandler($event)">
+    <button class="file-button" mat-button (click)="fileInput.click();">Add file</button>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close (click)="onUpdateClick()">Add</button>
+</div>

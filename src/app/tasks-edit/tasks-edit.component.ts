@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { catchError, throwError } from 'rxjs';
 import { Doc } from '../shared/models/doc.model';
 import { Performer } from '../shared/models/performer.model';
@@ -16,7 +17,7 @@ import { UserService } from '../shared/services/user.service';
   styleUrls: ['./tasks-edit.component.css']
 })
 export class TasksEditComponent implements OnInit {
-  task: TaskModel = new TaskModel();
+  task: TaskModel | undefined = new TaskModel();
   documents: Doc[] = [];
   users: Performer[] = [];
 
@@ -25,23 +26,34 @@ export class TasksEditComponent implements OnInit {
     private routeParam: ActivatedRoute, 
     private taskService: TaskService,
     private documentsService: DocumentService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private oidcSecurityService: OidcSecurityService) { }
 
   async ngOnInit(): Promise<void> {
     let id = this.routeParam.snapshot.paramMap.get('id');
+    let userId: string;
+
+    this.oidcSecurityService.checkAuth().subscribe(({ userData: userData }) => {
+      userId = userData.sub;   
+    });
 
     try {
-      this.task = (await this.taskService.getTask(id!).toPromise())!;
+      this.task = await this.taskService.getTask(id!).toPromise();
+
+      console.log(this.task);
+
+      if (this.task!.ownerUserId !== userId!)
+        throw "";
     } 
     catch (error) {
       this.route.navigate(['/error']);
       return;
     }
 
-    this.task.typeNumber = this.task.type === "Successively" ? 0 : 1;
+    this.task!.typeNumber = this.task!.type === "Successively" ? 0 : 1;
 
-    var documentsId = this.task.documents;
-    var usersId = this.task.performers;
+    var documentsId = this.task!.documents;
+    var usersId = this.task!.performers;
 
     for (let i = 0; i < documentsId.length; i++) {
       let doc = await this.documentsService.getDocsNameById(documentsId[i].documentId).toPromise();
@@ -71,16 +83,14 @@ export class TasksEditComponent implements OnInit {
   }
 
   async onCreate() {
-    let usersArgs = this.task.performers;
+    let usersArgs = this.task!.performers;
 
-    if (this.task.typeNumber == 0)
-      this.task.type = "successively";
+    if (this.task!.typeNumber == 0)
+      this.task!.type = "successively";
     else
-      this.task.type = "parallel";
+      this.task!.type = "parallel";
 
-    console.log(this.task);
-
-    await this.taskService.updateTask(this.task).toPromise(); 
+    await this.taskService.updateTask(this.task!).toPromise(); 
 
     this.route.navigate(['/']);
   }
@@ -88,29 +98,29 @@ export class TasksEditComponent implements OnInit {
   onDeleteDoc(document: Doc) {
     let index = this.documents.indexOf(document);
     
-    let arg = this.task.documents.filter(doc => doc.documentId === document.id).at(0);
-    let i = this.task.documents.indexOf(arg!);
+    let arg = this.task!.documents.filter(doc => doc.documentId === document.id).at(0);
+    let i = this.task!.documents.indexOf(arg!);
 
     if (i > -1)
-      this.task.documents.splice(i, 1);
+      this.task!.documents.splice(i, 1);
 
     if (index > -1)
       this.documents.splice(index, 1);
   }
 
   async onDeleteTask() {
-    await this.taskService.deleteTask(this.task.id).toPromise();
+    await this.taskService.deleteTask(this.task!.id).toPromise();
     this.route.navigate(['/']);
   }
 
   onCross(user: Performer) {
     let index = this.users.indexOf(user);
 
-    let arg = this.task.performers.filter(us => us.userId === user.userId && us.description === user.description && us.typeOfTask === user.typeOfTask).at(0);
-    let i = this.task.performers.indexOf(arg!);
+    let arg = this.task!.performers.filter(us => us.userId === user.userId && us.description === user.description && us.typeOfTask === user.typeOfTask).at(0);
+    let i = this.task!.performers.indexOf(arg!);
 
     if (i > -1)
-      this.task.performers.splice(i, 1);
+      this.task!.performers.splice(i, 1);
 
     if (index > -1)
       this.users.splice(index, 1);

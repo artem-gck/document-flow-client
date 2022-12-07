@@ -1,0 +1,94 @@
+.header-container {
+    margin-top: 10px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.header {
+    font-size: 32px;
+    margin: 40px;
+    max-width: 100%;
+}
+
+.container {
+    margin: 20px 40px 20px 30px;
+    max-width: 95%;
+}
+
+.row {
+    margin-left: 2px;
+}
+
+.submit, .refine {
+    width: 156px;
+    height: 45px;
+    margin-right: 30px;
+    border-radius: 20px;
+}
+
+.refine {
+    background-color: transparent;
+    border: 2px solid #146581;
+    color: #146581;
+}
+
+.submit {
+    background: linear-gradient(180deg, #14566D, #1F7390);
+    border: 0px;
+    color: white;
+}
+
+textarea {
+    border: 1px solid #146581;
+    border-radius: 4px;
+    resize: none;
+    padding: 5px;
+    height: 150px;
+    width: 500px;
+}
+
+textarea:focus {
+    outline: 0;
+}
+
+.lent {
+    height: 155px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0px;
+    overflow-x: auto;
+    overflow-y: none;
+}
+
+.cancel-button {
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.cancel {
+    margin-left: 0px;
+}
+
+.buttons1 {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.description {
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    height: 50px;
+    margin-bottom: 50px;
+}
+
+.documents {
+    margin-top: 170px;
+}

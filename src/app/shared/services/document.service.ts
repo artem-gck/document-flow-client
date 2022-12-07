@@ -32,6 +32,15 @@ export class DocumentService {
     return this.httpClient.post<string>(`documents`, formData);
   } 
 
+  public updateDocument(file: File, id: string, createrId: string): Observable<string> {
+    let formData = new FormData();
+    formData.append('id', id);
+    formData.append('createrId', createrId);
+    formData.append('file', file);
+
+    return this.httpClient.put<string>(`documents`, formData);
+  } 
+
   public getDocument(id: string, version: number) {   
     return this.httpClient.get(`documents/${id}/${version}`, { observe: 'response', responseType: 'blob' });
   }

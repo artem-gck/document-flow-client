@@ -28,6 +28,11 @@ import { ErrorComponent } from './error/error.component';
 import { ApiGatewayService } from './shared/interceptors/api-gateway.service';
 import { RegistrationComponent } from './registration/registration.component';
 import { TasksEditComponent } from './tasks-edit/tasks-edit.component';
+import { TasksExecuteComponent } from './tasks-execute/tasks-execute.component';
+import { SignatureDialogComponent } from './tasks-execute/signature-dialog/signature-dialog.component';
+import { UpdateDocDialogComponent } from './tasks-execute/update-doc-dialog/update-doc-dialog.component';
+import { SplashComponent } from './splash/splash.component';
+import { ValidateDialogComponent } from './validate-dialog/validate-dialog.component';
 
 export const interceptorProviders = 
    [
@@ -56,6 +61,11 @@ export const interceptorProviders =
     ErrorComponent,
     RegistrationComponent,
     TasksEditComponent,
+    TasksExecuteComponent,
+    SignatureDialogComponent,
+    UpdateDocDialogComponent,
+    SplashComponent,
+    ValidateDialogComponent,
   ],
   imports: [
     HttpClientModule,

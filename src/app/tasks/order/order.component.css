@@ -55,3 +55,18 @@ textarea {
     align-items: center;
     justify-content: center;
 }
+
+.executed {
+    color: green;
+}
+
+.not-executed {
+    color: red;
+}
+
+.signature-button {
+    border-radius: 10px;
+    border: 1px solid #146581;
+    color: #146581;
+    background-color: transparent;
+}

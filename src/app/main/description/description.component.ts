@@ -28,8 +28,6 @@ export class DescriptionComponent implements OnInit, OnChanges {
       
       this.members.push(memb!);
     });
-
-    console.log(this.members);
   }
 
   async ngOnInit(): Promise<void> {

@@ -6,6 +6,7 @@ import { User } from 'src/app/shared/models/user.model';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { TaskService } from '../shared/services/task.service';
 import { Performer } from '../shared/models/performer.model';
+import { Validation } from '../shared/models/validation.model';
 
 @Component({
   selector: 'app-tasks',
@@ -16,6 +17,7 @@ export class TasksComponent implements OnInit {
   task: TaskModel = new TaskModel();
   documents: Doc[] = [];
   users: Performer[] = [];
+  validation: Validation = new Validation();
 
   constructor(
     private route: Router, 
@@ -38,7 +40,12 @@ export class TasksComponent implements OnInit {
   }
 
   async onCreate() {
-    let usersArgs = this.task.performers;
+    this.validate();
+
+    if (!this.validation.isValid) {
+      console.log(this.validation);
+      return;
+    }
 
     this.oidcSecurityService.checkAuth().subscribe(({ userData: userData }) => {
       this.task.ownerUserId = userData.sub;   
@@ -80,5 +87,30 @@ export class TasksComponent implements OnInit {
 
     if (index > -1)
       this.users.splice(index, 1);
+  }
+
+  private validate() {
+    this.validation.isValid = true;
+    this.validation.text = "";
+
+    if (this.task.performers.length == 0) {
+      this.validation.isValid = false;
+      this.validation.text += "Users can't be empty\n";
+    }
+
+    if (this.task.documents.length == 0) {
+      this.validation.isValid = false;
+      this.validation.text += "Documents can't be empty\n";
+    }
+
+    if (this.task.header == undefined) {
+      this.validation.isValid = false;
+      this.validation.text += "Header can't be empty\n";
+    }
+
+    if (this.task.deadLine == undefined) {
+      this.validation.isValid = false;
+      this.validation.text += "Header can't be empty\n";
+    }
   }
 }

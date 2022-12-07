@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Select document for signature</h1>
+<div mat-dialog-content>
+    <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Documents</mat-label>
+        <input matInput
+               aria-label="Documents"
+               [matAutocomplete]="docAuto"
+               [formControl]="documentStateCtrl">
+        <mat-autocomplete #docAuto="matAutocomplete">
+          <mat-option *ngFor="let state of documentFilteredStates | async" [value]="state.name" (onSelectionChange)="getDocumentsSelection(state, $event)">
+            {{state.name}}
+          </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button (click)="onSignatureClick()" cdkFocusInitial>Signature</button>
+</div>

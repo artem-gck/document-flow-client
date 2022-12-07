@@ -8,9 +8,12 @@
             </div>
             <div class="label">
                 <span>{{ user.userName }}</span>
+                <br>
+                <span class="executed" *ngIf="user.isCompleted; else elseBlock">Executed</span>
+                <ng-template #elseBlock><span class="not-executed">Not executed</span></ng-template>
             </div>
         </div>
-        <div class="col-3 center">
+        <div *ngIf="!user.isCompleted; else centerElse" class="col-3 center">
             <mat-radio-group
                 aria-labelledby="example-radio-group-label"
                 class="example-radio-group"
@@ -20,8 +23,19 @@
                 </mat-radio-button>
           </mat-radio-group>
         </div>
-        <div class="col-6 bod">
-            <textarea name="" id="" cols="70" rows="4" placeholder="Description..." [(ngModel)]="user.description"></textarea>
+        <ng-template #centerElse>
+            <div class="col-3 center">
+                <button class="signature-button" *ngIf="user.typeOfTask === 'Signature'" (click)="onCheckSignature()">Check signature</button>
+                <span>{{ isValid }}</span>
+            </div>
+        </ng-template>
+        <div *ngIf="!user.isCompleted; else bodElse" class="col-6 bod">
+            <textarea name="" id="" cols="70" rows="4" placeholder="Description..." [(ngModel)]="user.description">qwert</textarea>
         </div>
+        <ng-template #bodElse>
+            <div class="col-6 bod">
+                <textarea name="" id="" cols="70" rows="4" placeholder="Resolve..." [(ngModel)]="user.resolve"></textarea>
+            </div>
+        </ng-template>
     </div>
 </div>

@@ -1,8 +1,8 @@
-import { outputAst } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Performer } from 'src/app/shared/models/performer.model';
+import { PublicKey } from 'src/app/shared/models/public-key.model';
 import { TaskModel } from 'src/app/shared/models/task.model';
-import { User } from 'src/app/shared/models/user.model';
+import { SignatureService } from 'src/app/shared/services/signature.service';
 
 @Component({
   selector: 'app-order',
@@ -12,12 +12,15 @@ import { User } from 'src/app/shared/models/user.model';
 export class OrderComponent implements OnInit {
   @Input() user: Performer;
   @Input() task: TaskModel;
+  isValid: string = "Not checked";
 
   @Output() crossUser = new EventEmitter<Performer>();
 
   typesOfExecuting = [ "Signature", "Reconciliation" ];
 
-  constructor() { }
+  constructor(
+    private signatureService: SignatureService
+  ) { }
 
   ngOnInit(): void {
     if (this.user.typeOfTask == undefined)
@@ -26,5 +29,19 @@ export class OrderComponent implements OnInit {
 
   onCross(user: Performer) {
     this.crossUser.emit(user);
+  }
+
+  async onCheckSignature() {
+    let key = new PublicKey();
+    key.key = this.user.publicKey;
+
+    let result = await this.signatureService.checkSignature(key, this.user.signatureDocumentId, 0).toPromise();
+
+    if (result?.status != 404)
+      this.isValid = "Valid"
+    else
+      this.isValid = "Not valid";
+
+    console.log("check signature");
   }
 }

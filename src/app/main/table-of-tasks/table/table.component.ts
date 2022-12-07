@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatRow, MatTableDataSource } from '@angular/material/table';
 import { TaskModel } from 'src/app/shared/models/task.model';
@@ -19,12 +19,16 @@ export class TableComponent implements OnInit, OnChanges  {
   dataSource: MatTableDataSource<TaskModel>;
   tasks: TaskModel[] | undefined;
 
+  pageSize: number[] = [ 6 ];
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   @Output() selectedTask = new EventEmitter<TaskModel>();
 
-  constructor(private taskService: TaskService, private userService: UserService) { }
+  constructor(
+    private taskService: TaskService, 
+    private userService: UserService) { }
   
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     if (this.selectedTypeOfTasks == 1)
@@ -38,6 +42,9 @@ export class TableComponent implements OnInit, OnChanges  {
         case 2:
           this.tasks = await this.taskService.getTasksByOwner("Completed").toPromise();
           break; 
+        case 3:
+          this.tasks = await this.taskService.getTasksByOwner("To refine").toPromise();
+          break; 
       }  
     else
       switch(this.selectedTab) {
@@ -49,6 +56,9 @@ export class TableComponent implements OnInit, OnChanges  {
           break;
         case 2:
           this.tasks = await this.taskService.getTasksByPerformer("Completed").toPromise();
+          break; 
+        case 3:
+          this.tasks = await this.taskService.getTasksByPerformer("To refine").toPromise();
           break; 
       }  
 

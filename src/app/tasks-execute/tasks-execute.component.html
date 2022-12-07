@@ -1,0 +1,29 @@
+<div class="header-container">
+    <span class="header">{{ task!.header }} ({{ task!.type }})</span>
+</div>
+<div class="container">
+    <div class="row description" *ngIf="performer.description; else description">
+        {{ performer.description }}
+    </div>
+    <ng-template #description>
+        <div class="row description">
+            No description...
+        </div>
+    </ng-template>
+    <div class="row buttons">
+        <button class="refine" (click)="onRefine()">To refine</button>
+        <button *ngIf="performer.typeOfTask === 'Signature'; else elseBlock" class="submit" (click)="onSignature()">Signature</button>
+        <ng-template #elseBlock><button class="submit" (click)="onReconciliation()">Reconciliation</button></ng-template>
+    </div>
+    <div class="row comments">
+        <textarea [(ngModel)]="performer.resolve" placeholder="Comments..."></textarea>
+    </div>
+    <div class="row documents">
+        <div appHorizontalScroll class="col-lg-12 lent">
+            <app-document *ngFor="let doc of documents" [document]="doc" (delete)="onUpdateDocument($event)"></app-document>
+        </div>
+    </div>
+    <div class="buttons1">
+        <button mat-button cdkFocusInitial (click)="onCancel()">Cancel</button>
+    </div>
+</div>

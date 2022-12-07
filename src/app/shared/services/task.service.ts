@@ -32,7 +32,7 @@ export class TaskService {
     return this.httpClient.get<TaskModel[]>(`tasks1/users/${this.userId}`);
   }
 
-  getTask(id: string) {
+  getTask(id: string): Observable<TaskModel> {
     return this.httpClient.get<TaskModel>(`tasks/${id}`);
   }
 

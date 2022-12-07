@@ -5,6 +5,7 @@ export class Performer {
     public typeOfTask: string;
     public description: string;
     public publicKey: string;
+    public signatureDocumentId: string;
     public resolve: string;
     public isCompleted: boolean;
 }

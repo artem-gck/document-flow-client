@@ -23,6 +23,9 @@
                 <mat-tab label="Completed"> 
                     <app-table (selectedTask)="onSelectTask($event)" [selectedTab]=2 [selectedTypeOfTasks]="selectedTypeOfTasks"></app-table> 
                 </mat-tab>
+                <mat-tab label="To refine"> 
+                    <app-table (selectedTask)="onSelectTask($event)" [selectedTab]=3 [selectedTypeOfTasks]="selectedTypeOfTasks"></app-table> 
+                </mat-tab>
             </mat-tab-group>
         </div>
     </div>

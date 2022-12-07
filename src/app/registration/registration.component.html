@@ -1,1 +1,27 @@
-<p>registration works!</p>
+<div class="container">
+    <div class="row">
+        <h1>One moment for starting work at system</h1>
+        <h2>Insert your data for system</h2>
+    </div>
+    <div class="row">
+        <mat-form-field class="field" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="user.name">
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field class="field" appearance="outline">
+            <mat-label>Surname</mat-label>
+            <input matInput [(ngModel)]="user.surname">
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field class="field" appearance="outline">
+            <mat-label>Patronymic</mat-label>
+            <input matInput [(ngModel)]="user.patronymic">
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <button mat-button (click)="onRegistrationClick()">Enter</button>
+    </div>
+</div>
