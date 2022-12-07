@@ -44,3 +44,7 @@ span {
     justify-content: center;
     width: 100%;
 }
+
+.validation {
+    color: red;
+}

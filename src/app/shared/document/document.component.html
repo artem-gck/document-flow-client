@@ -2,7 +2,10 @@
 <div class="container">
     <div class="row header">
         <button class="col-1" (click)="onDelete()">
-            <img src="/assets\images\cross.png">
+            <img *ngIf="!isUpdate; else update" src="/assets\images\cross.png">
+            <ng-template #update>
+                <img class="arrow" src="/assets\images\arrow.png">
+            </ng-template>
         </button>
         <span class="col-8">{{ document.creator }}</span>
         <span class="col-3">Version {{ document.version }}</span>

@@ -13,7 +13,8 @@
         </mat-autocomplete>
     </mat-form-field>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions align="end">
+  <span class="validation" *ngIf="!validation.isValid">Select document</span>
   <button mat-button (click)="onNoClick()">No Thanks</button>
   <button mat-button (click)="onSignatureClick()" cdkFocusInitial>Signature</button>
 </div>

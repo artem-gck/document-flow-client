@@ -20,7 +20,7 @@
     </div>
     <div class="row documents">
         <div appHorizontalScroll class="col-lg-12 lent">
-            <app-document *ngFor="let doc of documents" [document]="doc" (delete)="onUpdateDocument($event)"></app-document>
+            <app-document *ngFor="let doc of documents" [document]="doc" [isUpdate]="true" (delete)="onUpdateDocument($event)"></app-document>
         </div>
     </div>
     <div class="buttons1">

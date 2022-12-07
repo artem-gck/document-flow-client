@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Doc } from 'src/app/shared/models/doc.model';
+import { Validation } from 'src/app/shared/models/validation.model';
 import { DocumentService } from 'src/app/shared/services/document.service';
 
 @Component({
@@ -20,9 +21,11 @@ export class UpdateDocDialogComponent implements OnInit {
 
   nameOfFile: string = "Drag and drop file here";
   newFile: File;
+  validation: Validation = new Validation();
 
   ngOnInit(): void {
-    this.data.name
+    this.validation.isValid = true;
+    this.validation.text = "";
   }
 
   fileBrowseHandler(event: Event) {
@@ -37,8 +40,24 @@ export class UpdateDocDialogComponent implements OnInit {
   }
 
   async onUpdateClick() {
+    this.validate();
+
+    if (!this.validation.isValid) {
+      return;
+    }
+
     await this.documentService.updateDocument(this.newFile, this.data.id, this.data.creatorId).toPromise();
 
     this.dialogRef.close();
+  }
+
+  private validate() {
+    this.validation.isValid = true;
+    this.validation.text = "";
+
+    if (!this.newFile) {
+      this.validation.isValid = false;
+      this.validation.text = "Insert new file";
+    }
   }
 }

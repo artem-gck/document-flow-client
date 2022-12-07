@@ -6,6 +6,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { map, Observable, startWith } from 'rxjs';
 import { DialogSignatureData } from 'src/app/shared/models/dialog-signature-data.model';
 import { Doc } from 'src/app/shared/models/doc.model';
+import { Validation } from 'src/app/shared/models/validation.model';
 import { SignatureService } from 'src/app/shared/services/signature.service';
 import { TaskService } from 'src/app/shared/services/task.service';
 
@@ -20,6 +21,7 @@ export class SignatureDialogComponent implements OnInit {
 
   documentStateCtrl = new FormControl('');
   documentFilteredStates: Observable<Doc[]>;
+  validation: Validation = new Validation();
 
   constructor(
     public dialogRef: MatDialogRef<SignatureDialogComponent>,
@@ -35,6 +37,9 @@ export class SignatureDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.validation.isValid = true;
+    this.validation.text = "";
+
     this.documentFilteredStates = this.documentStateCtrl.valueChanges.pipe(
       startWith(''),
       map(doc => (doc ? this._docFilter(doc) : this.data.documents!.slice())),
@@ -46,6 +51,12 @@ export class SignatureDialogComponent implements OnInit {
   }
 
   async onSignatureClick() {
+    this.validate();
+
+    if (!this.validation.isValid) {
+      return;
+    }
+
     this.data.task.status = "In work";
 
     await this.signatureService.addSignature(this.selectedDocument.id, this.selectedDocument.version).toPromise();
@@ -77,5 +88,15 @@ export class SignatureDialogComponent implements OnInit {
     const filterValue = value.toLowerCase();
 
     return this.data.documents!.filter(document => document.name.toLowerCase().includes(filterValue));
+  }
+
+  private validate() {
+    this.validation.isValid = true;
+    this.validation.text = "";
+
+    if (!this.selectedDocument) {
+      this.validation.isValid = false;
+      this.validation.text = "Insert new file";
+    }
   }
 }

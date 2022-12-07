@@ -33,3 +33,10 @@ span {
     margin-left: 5px;
     margin-top: 15px;
 }
+
+.arrow {
+    transform: rotate(-90deg);
+    width: 15px;
+    height: 15px;
+    margin-left: 2px;
+}

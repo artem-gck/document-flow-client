@@ -46,8 +46,6 @@ export class TasksComponent implements OnInit {
     this.validate();
 
     if (!this.validation.isValid) {
-      console.log(this.validation);
-
       this.dialog.open(ValidateDialogComponent, {
         width: '400px',
         data: this.validation,
@@ -112,12 +110,12 @@ export class TasksComponent implements OnInit {
       this.validation.text += "Documents can't be empty\n";
     }
 
-    if (this.task.header == undefined) {
+    if (!this.task.header) {
       this.validation.isValid = false;
       this.validation.text += "Header can't be empty\n";
     }
 
-    if (this.task.deadLine == undefined) {
+    if (!this.task.deadLine) {
       this.validation.isValid = false;
       this.validation.text += "Deadline can't be empty\n";
     }

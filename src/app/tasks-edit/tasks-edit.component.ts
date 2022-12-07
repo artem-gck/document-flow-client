@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { catchError, throwError } from 'rxjs';
@@ -7,9 +8,11 @@ import { Doc } from '../shared/models/doc.model';
 import { Performer } from '../shared/models/performer.model';
 import { TaskModel } from '../shared/models/task.model';
 import { User } from '../shared/models/user.model';
+import { Validation } from '../shared/models/validation.model';
 import { DocumentService } from '../shared/services/document.service';
 import { TaskService } from '../shared/services/task.service';
 import { UserService } from '../shared/services/user.service';
+import { ValidateDialogComponent } from '../validate-dialog/validate-dialog.component';
 
 @Component({
   selector: 'app-tasks-edit',
@@ -17,9 +20,10 @@ import { UserService } from '../shared/services/user.service';
   styleUrls: ['./tasks-edit.component.css']
 })
 export class TasksEditComponent implements OnInit {
-  task: TaskModel | undefined = new TaskModel();
+  task: TaskModel = new TaskModel();
   documents: Doc[] = [];
   users: Performer[] = [];
+  validation: Validation = new Validation();
 
   constructor(
     private route: Router, 
@@ -27,7 +31,8 @@ export class TasksEditComponent implements OnInit {
     private taskService: TaskService,
     private documentsService: DocumentService,
     private userService: UserService,
-    private oidcSecurityService: OidcSecurityService) { }
+    private oidcSecurityService: OidcSecurityService,
+    private dialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {
     let id = this.routeParam.snapshot.paramMap.get('id');
@@ -38,7 +43,7 @@ export class TasksEditComponent implements OnInit {
     });
 
     try {
-      this.task = await this.taskService.getTask(id!).toPromise();
+      this.task = (await this.taskService.getTask(id!).toPromise())!;
 
       console.log(this.task);
 
@@ -82,7 +87,20 @@ export class TasksEditComponent implements OnInit {
     this.users = [];
   }
 
-  async onCreate() {
+  async onUpdate() {
+    this.validate();
+
+    console.log(this.validation);
+
+    if (!this.validation.isValid) {
+      this.dialog.open(ValidateDialogComponent, {
+        width: '400px',
+        data: this.validation,
+      });
+
+      return;
+    }
+
     let usersArgs = this.task!.performers;
 
     if (this.task!.typeNumber == 0)
@@ -137,5 +155,30 @@ export class TasksEditComponent implements OnInit {
 
     return throwError(
       'Something bad happened; please try again later.');
+  }
+
+  private validate() {
+    this.validation.isValid = true;
+    this.validation.text = "";
+
+    if (this.task.performers.length == 0) {
+      this.validation.isValid = false;
+      this.validation.text += "Users can't be empty\n";
+    }
+
+    if (this.task.documents.length == 0) {
+      this.validation.isValid = false;
+      this.validation.text += "Documents can't be empty\n";
+    }
+
+    if (!this.task.header) {
+      this.validation.isValid = false;
+      this.validation.text += "Header can't be empty\n";
+    }
+
+    if (!this.task.deadLine) {
+      this.validation.isValid = false;
+      this.validation.text += "Deadline can't be empty\n";
+    }
   }
 }

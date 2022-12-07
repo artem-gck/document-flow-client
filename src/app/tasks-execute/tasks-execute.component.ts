@@ -5,9 +5,11 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { Doc } from '../shared/models/doc.model';
 import { Performer } from '../shared/models/performer.model';
 import { TaskModel } from '../shared/models/task.model';
+import { Validation } from '../shared/models/validation.model';
 import { DocumentService } from '../shared/services/document.service';
 import { SplashOnOffService } from '../shared/services/splash-on-off.service';
 import { TaskService } from '../shared/services/task.service';
+import { ValidateDialogComponent } from '../validate-dialog/validate-dialog.component';
 import { SignatureDialogComponent } from './signature-dialog/signature-dialog.component';
 import { UpdateDocDialogComponent } from './update-doc-dialog/update-doc-dialog.component';
 
@@ -21,6 +23,7 @@ export class TasksExecuteComponent implements OnInit, AfterViewInit {
   performer: Performer = new Performer();
   documents: Doc[] = [];
   userId: string;
+  validation: Validation = new Validation();
 
   constructor(
     private route: Router,
@@ -32,6 +35,9 @@ export class TasksExecuteComponent implements OnInit, AfterViewInit {
     private splashOnOffService: SplashOnOffService ) { }
 
   async ngOnInit(): Promise<void> {
+    this.validation.isValid = true;
+    this.validation.text = "";
+
     this.splashOnOffService.switchOnOff(true); 
 
     let id = this.routeParam.snapshot.paramMap.get('id');
@@ -76,6 +82,16 @@ export class TasksExecuteComponent implements OnInit, AfterViewInit {
   }
 
   async onRefine() {
+    this.validateRefine();
+
+    if (!this.validation.isValid) {
+      this.dialog.open(ValidateDialogComponent, {
+        width: '400px',
+        data: this.validation,
+      });
+      return;
+    }
+
     this.task!.status = "To refine"
 
     await this.taskService.updateTask(this.task!).toPromise();
@@ -91,6 +107,16 @@ export class TasksExecuteComponent implements OnInit, AfterViewInit {
   }
 
   async onReconciliation() {
+    this.validateRefine();
+
+    if (!this.validation.isValid) {
+      this.dialog.open(ValidateDialogComponent, {
+        width: '400px',
+        data: this.validation,
+      });
+      return;
+    }
+
     this.performer.isCompleted = true;
     this.task!.status = "In work";
 
@@ -108,5 +134,15 @@ export class TasksExecuteComponent implements OnInit, AfterViewInit {
     dialog.afterClosed().subscribe(a => {
       window.location.reload();
     })
+  }
+
+  private validateRefine() {
+    this.validation.isValid = true;
+    this.validation.text = "";
+
+    if (!this.performer.resolve) {
+      this.validation.isValid = false;
+      this.validation.text += "Add resolve of task";
+    }
   }
 }

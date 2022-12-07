@@ -10,6 +10,7 @@ import { DocumentService } from '../services/document.service';
   styleUrls: ['./document.component.css']
 })
 export class DocumentComponent implements OnInit {
+  @Input() isUpdate: boolean = false;
   @Input() document: Doc;
   @Output() delete = new EventEmitter<Doc>();
 

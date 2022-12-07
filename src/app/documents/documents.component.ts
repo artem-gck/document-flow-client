@@ -28,9 +28,6 @@ export class DocumentsComponent implements OnInit {
   }
 
   async onAddClick() {
-    this.validation.isValid = true;
-    this.validation.text = "";
-
     this.validate();
 
     if (!this.validation.isValid) {
@@ -61,6 +58,9 @@ export class DocumentsComponent implements OnInit {
   }
 
   private validate() {
+    this.validation.isValid = true;
+    this.validation.text = "";
+
     if (!this.file) {
       this.validation.isValid = false;
       this.validation.text = "Insert new file";
