@@ -94,6 +94,8 @@ export class TasksExecuteComponent implements OnInit, AfterViewInit {
 
     this.task!.status = "To refine"
 
+    console.log(this.task);
+
     await this.taskService.updateTask(this.task!).toPromise();
 
     this.route.navigate(['/']);

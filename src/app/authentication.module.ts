@@ -8,11 +8,11 @@ import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
     CommonModule,
     AuthModule.forRoot({
       config: {
-        authority: "https://localhost:44310",
+        authority: "https://localhost:8083",
         redirectUrl: window.location.origin,
         postLogoutRedirectUri: window.location.origin,
-        clientId: "angular1",
-        scope: 'angular profile openid offline_access',
+        clientId: "angular",
+        scope: 'angular profile openid offline_access gateway_api signature_api notification_api management_api document_api structure_api task_api userinfo_api',
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,

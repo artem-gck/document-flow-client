@@ -50,7 +50,7 @@ export class MainComponent implements OnInit, AfterContentInit {
   }
 
   onEditClick() {
-    this.route.navigate([`/tasks/edit/${this.selectedTask!.id}`]);
+    this.route.navigate([`/tasks/${this.selectedTask!.id}/edit`]);
   }
 
   onDeleteClick(enterAnimationDuration: string, exitAnimationDuration: string): void {
@@ -104,7 +104,7 @@ export class MainComponent implements OnInit, AfterContentInit {
   }
 
   onExecClick() { 
-    this.route.navigate([`/tasks/execute/${this.selectedTask!.id}`]);
+    this.route.navigate([`/tasks/${this.selectedTask!.id}/execute`]);
   }
 
   onSelectChange(select: number) {

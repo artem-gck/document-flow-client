@@ -37,11 +37,9 @@ export class OrderComponent implements OnInit {
 
     let result = await this.signatureService.checkSignature(key, this.user.signatureDocumentId, 0).toPromise();
 
-    if (result?.status != 404)
-      this.isValid = "Valid"
+    if (result?.status == 404)
+      this.isValid = "Not valid"
     else
-      this.isValid = "Not valid";
-
-    console.log("check signature");
+      this.isValid = "Valid";
   }
 }

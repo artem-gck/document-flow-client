@@ -13,8 +13,8 @@ import { TasksComponent } from './tasks/tasks.component';
 const routes: Routes = [
   { path: '', component: MainComponent, canActivate: [AutoLoginAllRoutesGuard, NewUserGuard] },
   { path: 'tasks', component: TasksComponent, canActivate: [AutoLoginAllRoutesGuard, NewUserGuard] },
-  { path: 'tasks/edit/:id', component: TasksEditComponent, canActivate: [AutoLoginAllRoutesGuard, NewUserGuard] },
-  { path: 'tasks/execute/:id', component: TasksExecuteComponent, canActivate: [AutoLoginAllRoutesGuard, NewUserGuard] },
+  { path: 'tasks/:id/edit', component: TasksEditComponent, canActivate: [AutoLoginAllRoutesGuard, NewUserGuard] },
+  { path: 'tasks/:id/execute', component: TasksExecuteComponent, canActivate: [AutoLoginAllRoutesGuard, NewUserGuard] },
   { path: 'regisration', component: RegistrationComponent, canActivate: [AutoLoginAllRoutesGuard] },
   { path: 'accounts', component: AccountsComponent, canActivate: [AutoLoginAllRoutesGuard, NewUserGuard] },
   { path: '**', component: ErrorComponent, canActivate: [AutoLoginAllRoutesGuard] },
